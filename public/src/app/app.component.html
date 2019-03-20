@@ -1,0 +1,38 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<h1 style="text-align:center">Rate My Cakes</h1>
+<div id="wrapper">
+  <div id="cakeform">
+    <h3>Submit a cake to be rated</h3>
+    <form (submit)="addCake(newCake.baker, newCake.image)">
+      Baker Name:<br>
+      <input type="text" name="baker" [(ngModel)]="newCake.baker"><br>
+      Image URL:<br>
+      <input type="text" name="url" [(ngModel)]="newCake.image"><br>
+      <input type="submit" style="position:relative; margin-left: 100px; margin-top: 10px;" value="Submit Cake">
+    </form>
+  </div>
+
+
+  <div id="giverate">
+    <div class="rateall" *ngFor="let cake of cakes.data">
+      <img (click)="showCake(cake)" class="smallimg rateimg" [src]="cake.image">
+      <div class="rateit">
+        <form (submit)="addRate(cake._id, stars, comment, cake)">
+          <select name="stars" [(ngModel)]="stars">
+            <option selected="selected" value="5">5 stars</option>
+            <option value="4">4 stars</option>
+            <option value="3">3 stars</option>
+            <option value="2">2 stars</option>
+            <option value="1">1 stars</option>
+          </select><br>
+          Comment:<br>
+          <textarea name="comment" [(ngModel)]="comment" cols="20" rows="8"></textarea>
+          <input type="submit" style="position:relative; margin-left: 120px;" value="Rate">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-bakedby *ngIf="oneCake.baker" [bakedby]="oneCake" [anotheravg]="anotheravg"></app-bakedby>
+<router-outlet></router-outlet>
