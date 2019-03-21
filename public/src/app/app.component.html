@@ -17,16 +17,16 @@
     <div class="rateall" *ngFor="let cake of cakes.data">
       <img (click)="showCake(cake)" class="smallimg rateimg" [src]="cake.image">
       <div class="rateit">
-        <form (submit)="addRate(cake._id, stars, comment, cake)">
-          <select name="stars" [(ngModel)]="stars">
-            <option selected="selected" value="5">5 stars</option>
+        <form (submit)="addRate(cake._id, stars.value, comment.value, cake)">
+          <select name="stars" ngModel #stars="ngModel">
+            <option value="5" id="5" >5 stars</option>
             <option value="4">4 stars</option>
             <option value="3">3 stars</option>
             <option value="2">2 stars</option>
             <option value="1">1 stars</option>
           </select><br>
           Comment:<br>
-          <textarea name="comment" [(ngModel)]="comment" cols="20" rows="8"></textarea>
+          <textarea name="comment" ngModel #comment="ngModel" cols="20" rows="8"></textarea>
           <input type="submit" style="position:relative; margin-left: 120px;" value="Rate">
         </form>
       </div>

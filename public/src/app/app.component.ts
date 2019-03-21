@@ -12,7 +12,6 @@ export class AppComponent {
   newCake = {baker: "", image: ""};
   oneCake = {};
   anotheravg:number = 0;
-  stars = 5;
   constructor(private _http: HttpService){
     this.getCakes();
     this.newCake = {baker: "", image: ""};
@@ -20,7 +19,6 @@ export class AppComponent {
   getCakes(){
     this._http.getCakes().subscribe(data => {
       this.cakes = data;
-      console.log(this.cakes);
     });
   }
   addCake(baker, image){
