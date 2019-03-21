@@ -17,9 +17,10 @@
     <div class="rateall" *ngFor="let cake of cakes.data">
       <img (click)="showCake(cake)" class="smallimg rateimg" [src]="cake.image">
       <div class="rateit">
-        <form (submit)="addRate(cake._id, stars.value, comment.value, cake)">
-          <select name="stars" ngModel #stars="ngModel">
-            <option value="5" id="5" >5 stars</option>
+        <form (submit)="addRate(cake._id, stars, comment.value, cake)">
+            <b *ngIf="stars.errors">Stars Required</b><br>
+          <select name="stars" required minlength="1" ngModel #stars="ngModel">
+            <option value="5" id="5">5 stars</option>
             <option value="4">4 stars</option>
             <option value="3">3 stars</option>
             <option value="2">2 stars</option>

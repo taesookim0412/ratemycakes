@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {HttpService} from './http.service';
+import { HttpService } from './http.service';
 import { longStackSupport } from 'q';
 
 @Component({
@@ -9,45 +9,47 @@ import { longStackSupport } from 'q';
 })
 export class AppComponent {
   cakes = {};
-  newCake = {baker: "", image: ""};
+  newCake = { baker: "", image: "" };
   oneCake = {};
-  anotheravg:number = 0;
-  constructor(private _http: HttpService){
+  anotheravg: number = 0;
+  constructor(private _http: HttpService) {
     this.getCakes();
-    this.newCake = {baker: "", image: ""};
+    this.newCake = { baker: "", image: "" };
   }
-  getCakes(){
+  getCakes() {
     this._http.getCakes().subscribe(data => {
       this.cakes = data;
     });
   }
-  addCake(baker, image){
+  addCake(baker, image) {
     this._http.addCake(baker, image).subscribe(() => {
-      this.getCakes();  
+      this.getCakes();
     });
   }
-  addRate(id, stars, comment, cake){
-    
-    this._http.addRate(id, stars, comment).subscribe(()=>{
+  addRate(id, stars, comment, cake) {
+    if (stars.errors != null) {
+      return;
+    }
+    this._http.addRate(id, stars.value, comment).subscribe(() => {
       this._http.getId(id).subscribe(tdata => {
         this.setCake(tdata);
       });
-      
+
     });
   }
-  setCake(data){
+  setCake(data) {
     let thisCake = data;
     this.oneCake = thisCake.data[0];
     this.calcSecondAvg(this.oneCake);
   }
-  showCake(cake){
+  showCake(cake) {
     this.oneCake = cake;
     this.calcSecondAvg(this.oneCake);
   }
   /** */
-  calcSecondAvg(oneCake){
+  calcSecondAvg(oneCake) {
     this.anotheravg = 0;
-    for (let i of oneCake.rates){
+    for (let i of oneCake.rates) {
       this.anotheravg += parseInt(i.stars);
     }
     this.anotheravg /= oneCake.rates.length;
